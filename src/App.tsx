@@ -476,7 +476,7 @@ export default function App() {
             >3D Stack</span>
           </h1>
 
-          <p className="text-lg text-[var(--muted)] leading-relaxed max-w-2xl">
+          <p className="text-lg text-slate-100 font-medium leading-relaxed max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.4)' }}>
             Ditch scattered spreadsheets and separate chat apps. Deploy a bespoke operations command center featuring real-time task boards, structured EOD logs, internal chat, automated payroll calculation, and secured client-facing workspaces. Inspired by our flagship <strong>MyDeskii</strong> design.
           </p>
 
@@ -671,36 +671,41 @@ export default function App() {
               </div>
             </div>
 
-            {/* Carousel Navigation Controls (Arrows) */}
-            <button 
-              onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 border border-[var(--border)] flex items-center justify-center text-white hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all z-20 shadow-lg hover:scale-105"
-              aria-label="Previous slide"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button 
-              onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 border border-[var(--border)] flex items-center justify-center text-white hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all z-20 shadow-lg hover:scale-105"
-              aria-label="Next slide"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+            {/* Pagination & Navigation controls bar */}
+            <div className="flex items-center justify-center gap-6 mt-8 relative z-20">
+              {/* Prev Button */}
+              <button 
+                onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+                className="w-10 h-10 rounded-full bg-slate-900/60 border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-white hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all shadow-md"
+                aria-label="Previous slide"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-            {/* Pagination dots (Bullets) */}
-            <div className="flex justify-center gap-2 mt-8">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'bg-[var(--accent)] w-6 shadow-[0_0_10px_var(--accent)]' : 'bg-white/20 hover:bg-white/45'}`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
+              {/* Dots */}
+              <div className="flex gap-2">
+                {slides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'bg-[var(--accent)] w-6 shadow-[0_0_10px_var(--accent)]' : 'bg-white/20 hover:bg-white/45'}`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <button 
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+                className="w-10 h-10 rounded-full bg-slate-900/60 border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-white hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all shadow-md"
+                aria-label="Next slide"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>

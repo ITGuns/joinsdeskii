@@ -1659,3 +1659,46 @@ select {
   background: rgba(255, 255, 255, 0.1);
   color: var(--accent);
 }
+
+/* Enhanced Animated Carousel Showcase */
+.carousel-container {
+  border-radius: 16px;
+  position: relative;
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(23, 217, 245, 0.03);
+}
+
+.carousel-mockup-frame {
+  position: relative;
+  border-radius: 12px;
+  background: #090d16;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.75),
+    0 0 40px rgba(23, 217, 245, 0.05);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: zoom-in;
+  width: 100%;
+}
+
+.carousel-mockup-frame:hover {
+  transform: translateY(-4px) scale(1.015) rotateX(1deg) rotateY(-1.5deg);
+  border-color: rgba(23, 217, 245, 0.4);
+  box-shadow: 
+    0 35px 70px -10px rgba(0, 0, 0, 0.85),
+    0 0 65px rgba(23, 217, 245, 0.2);
+}
+
+.carousel-mockup-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out;
+}
