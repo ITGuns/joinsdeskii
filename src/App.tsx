@@ -17,15 +17,15 @@ import {
   Activity
 } from 'lucide-react';
 
-import ssDashboard from './showcase commercial/Screenshot 2026-07-02 004035.png';
-import ssStatus from './showcase commercial/Screenshot 2026-07-02 004042.png';
-import ssTasks from './showcase commercial/Screenshot 2026-07-02 004139.png';
-import ssLogs from './showcase commercial/Screenshot 2026-07-02 004156.png';
-import ssCalendar from './showcase commercial/Screenshot 2026-07-02 004212.png';
-import ssPayslips from './showcase commercial/Screenshot 2026-07-02 004230.png';
-import ssAnnouncements from './showcase commercial/Screenshot 2026-07-02 004255.png';
-import ssChat from './showcase commercial/Screenshot 2026-07-02 004308.png';
-import ssOperations from './showcase commercial/Screenshot 2026-07-02 004319.png';
+import ssDashboard from './showcase/dashboard.png';
+import ssStatus from './showcase/status.png';
+import ssTasks from './showcase/tasks.png';
+import ssLogs from './showcase/logs.png';
+import ssCalendar from './showcase/calendar.png';
+import ssPayslips from './showcase/payslips.png';
+import ssAnnouncements from './showcase/announcements.png';
+import ssChat from './showcase/chat.png';
+import ssOperations from './showcase/departments.png';
 
 interface PricingTier {
   name: string;
@@ -106,6 +106,7 @@ export default function App() {
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   const slides = [
     {
@@ -113,127 +114,233 @@ export default function App() {
       subtitle: "Admin Dashboard Overview",
       description: "A centralized platform for complete operational oversight. Monitor active employee clock-ins, review daily log submissions, manage announcements, and resolve pending operations tasks instantly.",
       image: ssDashboard,
-      icon: <Layers className="w-5 h-5 text-[var(--accent)]" />,
+      icon: <Layers className="w-5 h-5" />,
       features: [
         "Real-time clock-in / clock-out tracking",
         "Unified action lists (needs attention)",
         "Instant company announcement widgets",
         "Consolidated department analytics"
-      ]
+      ],
+      accentColor: '#17d9f5',
+      glowColor: 'rgba(23, 217, 245, 0.25)',
+      colorClass: 'text-[var(--accent)]',
+      accentBg: 'rgba(23, 217, 245, 0.1)',
+      stats: { label: "Active Sessions", value: "14 Users" },
+      pathName: "dashboard",
+      badge: "Core",
+      card1: { label: "SYSTEM LATENCY", value: "12ms (Optimal)" },
+      card2: { label: "ACTIVE SESSIONS", value: "14 Online" }
     },
     {
       title: "Work Status & Alerts",
       subtitle: "Shift Logs & Reminders",
       description: "Ensure operational consistency. Automatically flags missing clock-outs, alerts team members of unsubmitted daily logs, and synchronizes timezone updates to keep everyone aligned.",
       image: ssStatus,
-      icon: <Shield className="w-5 h-5 text-emerald-400" />,
+      icon: <Shield className="w-5 h-5" />,
       features: [
         "Overdue tasks and logs warnings",
         "Automated system notification center",
         "Dynamic status pills (Ready, Break, Out)",
         "Action items linking directly to modules"
-      ]
+      ],
+      accentColor: '#34d399',
+      glowColor: 'rgba(52, 211, 153, 0.25)',
+      colorClass: 'text-emerald-400',
+      accentBg: 'rgba(52, 211, 153, 0.1)',
+      stats: { label: "Clock-outs Pending", value: "2 Alerts" },
+      pathName: "work-status-alerts",
+      badge: "Alerts",
+      card1: { label: "ALERT ENGINE", value: "Active" },
+      card2: { label: "PENDING ALERTS", value: "2 Clock-outs" }
     },
     {
       title: "Task Boards & Kanban",
       subtitle: "Comprehensive Task Tracking",
       description: "Track operations in kanban boards, lists, and calendar formats. Assign multiple collaborators, estimate times down to the minute, and generate EOD (End of Day) focus sheets.",
       image: ssTasks,
-      icon: <Clock className="w-5 h-5 text-amber-400" />,
+      icon: <Clock className="w-5 h-5" />,
       features: [
         "HH:MM precision time estimates",
         "Auto-synced board and calendar views",
         "Multi-employee collaborator chips",
         "EOD compilation & PDF reports"
-      ]
+      ],
+      accentColor: '#fbbf24',
+      glowColor: 'rgba(251, 191, 36, 0.25)',
+      colorClass: 'text-amber-400',
+      accentBg: 'rgba(251, 191, 36, 0.1)',
+      stats: { label: "Completion Rate", value: "91.4%" },
+      pathName: "task-boards-kanban",
+      badge: "Tasks",
+      card1: { label: "BOARD STATE", value: "Synced" },
+      card2: { label: "VELOCITY INDEX", value: "98.2%" }
     },
     {
       title: "Daily Activity Logging",
       subtitle: "EOD Logs & Revision Overrides",
       description: "Streamline daily reporting. Employees can import completed work straight from the task tracker. Features a discussion thread for manager check-ins and performance overrides.",
       image: ssLogs,
-      icon: <Users className="w-5 h-5 text-[var(--accent-purple)]" />,
+      icon: <Users className="w-5 h-5" />,
       features: [
         "Task auto-import by selected date",
         "Department-level log categories",
         "Interactive comment threads for feedback",
         "Manager edit and approval flows"
-      ]
+      ],
+      accentColor: '#c084fc',
+      glowColor: 'rgba(192, 132, 252, 0.25)',
+      colorClass: 'text-purple-400',
+      accentBg: 'rgba(192, 132, 252, 0.1)',
+      stats: { label: "EOD Logs Received", value: "8 / 8 Staff" },
+      pathName: "activity-logging",
+      badge: "Logs",
+      card1: { label: "EOD METRIC", value: "8/8 Submitted" },
+      card2: { label: "AUDIT LOGS", value: "Verified" }
     },
     {
       title: "Payroll Calendar",
       subtitle: "Time Entry Audit Controls",
       description: "Verify hours and pay periods on a visual grid. Supports custom salary divisor templates, billable hour caps, and automated checks for overlapping sessions before issuing payments.",
       image: ssCalendar,
-      icon: <Calendar className="w-5 h-5 text-cyan-400" />,
+      icon: <Calendar className="w-5 h-5" />,
       features: [
         "Integrated time clock & manual overrides",
         "Overlapping work alerts & duplicate warning",
         "Billable cap enforcement per employee",
         "Automated payroll period scheduler"
-      ]
+      ],
+      accentColor: '#22d3ee',
+      glowColor: 'rgba(34, 211, 238, 0.25)',
+      colorClass: 'text-cyan-400',
+      accentBg: 'rgba(34, 211, 238, 0.1)',
+      stats: { label: "Audit Warnings", value: "0 Detected" },
+      pathName: "payroll-calendar",
+      badge: "Audit",
+      card1: { label: "DIVISOR TEMP", value: "Template 12B" },
+      card2: { label: "CONFLICT CHECK", value: "0 Overlaps" }
     },
     {
       title: "Payslips & Compensation",
       subtitle: "Employee Pay History Ledger",
       description: "Transparency in earnings. Employees can view their pay history, check YTD gross and net incomes, audit hourly rates, and download official PDF payslips directly from their accounts.",
       image: ssPayslips,
-      icon: <Database className="w-5 h-5 text-emerald-500" />,
+      icon: <Database className="w-5 h-5" />,
       features: [
         "Interactive payslip preview cards",
         "YTD gross and net earnings display",
         "Self-service PDF print & downloads",
         "Secured salary database isolated by RLS"
-      ]
+      ],
+      accentColor: '#10b981',
+      glowColor: 'rgba(16, 185, 129, 0.25)',
+      colorClass: 'text-emerald-500',
+      accentBg: 'rgba(16, 185, 129, 0.1)',
+      stats: { label: "RLS Isolation Level", value: "Hardened SQL" },
+      pathName: "payslips",
+      badge: "Ledger",
+      card1: { label: "RLS FIREWALL", value: "Hardened" },
+      card2: { label: "PDF ENGINES", value: "Render Ready" }
     },
     {
       title: "Company Announcements",
       subtitle: "Shoutouts & Attendance RSVP",
       description: "Share news, announce milestones, and schedule events. Broadcast announcements with RSVP options to gauge team attendance, and send shoutouts to celebrate employee success.",
       image: ssAnnouncements,
-      icon: <MessageSquare className="w-5 h-5 text-[var(--accent-secondary)]" />,
+      icon: <MessageSquare className="w-5 h-5" />,
       features: [
         "Company-wide bulletin feeds",
         "One-click 'Mark as Going' event RSVPs",
         "Interactive shoutout posts & comments",
         "Likes and reactions for social engagement"
-      ]
+      ],
+      accentColor: '#f23bbf',
+      glowColor: 'rgba(242, 59, 191, 0.25)',
+      colorClass: 'text-[var(--accent-secondary)]',
+      accentBg: 'rgba(242, 59, 191, 0.1)',
+      stats: { label: "RSVPs Today", value: "18 Going" },
+      pathName: "announcements",
+      badge: "Social",
+      card1: { label: "RSVP RATE", value: "92% Attend" },
+      card2: { label: "MILESTONES", value: "2 Active" }
     },
     {
       title: "Team Conversations",
       subtitle: "WebSocket Direct Messages",
       description: "Real-time, secured corporate messaging. Set up department channels or contact colleagues directly. Fully featured with file attachments, link previews, and text editing.",
       image: ssChat,
-      icon: <Globe className="w-5 h-5 text-[var(--accent)]" />,
+      icon: <Globe className="w-5 h-5" />,
       features: [
         "Sub-second websocket message updates",
         "Archived & active channel controls",
         "Direct messages with read indicators",
         "Drag-and-drop file sharing directory"
-      ]
+      ],
+      accentColor: '#17d9f5',
+      glowColor: 'rgba(23, 217, 245, 0.25)',
+      colorClass: 'text-[var(--accent)]',
+      accentBg: 'rgba(23, 217, 245, 0.1)',
+      stats: { label: "WS Latency Ping", value: "12ms Stable" },
+      pathName: "conversations",
+      badge: "WS",
+      card1: { label: "CONN PROTOCOL", value: "WS:// SECURE" },
+      card2: { label: "CHANNELS", value: "5 Active" }
     },
     {
       title: "Departments & Org Charts",
       subtitle: "Operations Hierarchy Controls",
       description: "Organize your workforce into functional units. Map reporting hierarchies into interactive visual charts, assign operational roles, and set module access rules for each department.",
       image: ssOperations,
-      icon: <Server className="w-5 h-5 text-[var(--accent-purple)]" />,
+      icon: <Server className="w-5 h-5" />,
       features: [
         "Department-level permission systems",
         "Visual org chart synchronization",
         "Granular security and client access logs",
         "Invite link generation with token security"
-      ]
+      ],
+      accentColor: '#9a4dff',
+      glowColor: 'rgba(154, 77, 255, 0.25)',
+      colorClass: 'text-[var(--accent-purple)]',
+      accentBg: 'rgba(154, 77, 255, 0.1)',
+      stats: { label: "Security Level", value: "Tier-3 RLS" },
+      pathName: "departments-org-charts",
+      badge: "Access",
+      card1: { label: "ACCESS CTRL", value: "RBAC (Tier-3)" },
+      card2: { label: "LDAP SYNC", value: "Active" }
     }
   ];
 
   useEffect(() => {
-    if (!isAutoplay) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [isAutoplay, slides.length]);
+    let interval: ReturnType<typeof setInterval> | null = null;
+    if (isAutoplay) {
+      interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            setCurrentSlide((slide) => (slide + 1) % slides.length);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 60);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isAutoplay, currentSlide, slides.length]);
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setProgress(0);
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setProgress(0);
+  };
+
+  const handleGoToSlide = (idx: number) => {
+    setCurrentSlide(idx);
+    setProgress(0);
+  };
 
   const pricingTiers: PricingTier[] = [
     {
@@ -476,8 +583,8 @@ export default function App() {
             >3D Stack</span>
           </h1>
 
-          <p className="text-lg text-slate-100 font-medium leading-relaxed max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.4)' }}>
-            Ditch scattered spreadsheets and separate chat apps. Deploy a bespoke operations command center featuring real-time task boards, structured EOD logs, internal chat, automated payroll calculation, and secured client-facing workspaces. Inspired by our flagship <strong>MyDeskii</strong> design.
+          <p className="text-lg font-medium leading-relaxed max-w-2xl" style={{ color: '#ffffff', textShadow: '0 2px 10px rgba(0, 0, 0, 0.85)' }}>
+            Ditch scattered spreadsheets and separate chat apps. Deploy a bespoke operations command center featuring real-time task boards, structured EOD logs, internal chat, automated payroll calculation, and secured client-facing workspaces. Inspired by our flagship <strong style={{ color: 'var(--accent-secondary)' }}>MyDeskii</strong> design.
           </p>
 
           <div className="flex flex-wrap gap-4 mt-2 justify-center">
@@ -564,10 +671,25 @@ export default function App() {
 
       {/* Platform Commercial Showcase Section (Animated Carousel) */}
       <section id="showcase" className="py-24 border-t border-[var(--border)] bg-slate-950/20 relative">
-        <div className="glow-orb bottom-10 right-10" style={{ background: 'rgba(23, 217, 245, 0.04)' }} />
+        <div 
+          className="glow-orb bottom-10 right-10" 
+          style={{ 
+            background: `radial-gradient(circle, ${slides[currentSlide].accentColor}18 0%, transparent 70%)`,
+            transition: 'background 0.5s ease'
+          }} 
+        />
         <div className="container">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <div className="badge badge-secondary mb-4">Inside the Workspace</div>
+            <div 
+              className="badge mb-4 transition-all duration-300"
+              style={{
+                borderColor: `${slides[currentSlide].accentColor}44`,
+                background: `${slides[currentSlide].accentColor}11`,
+                color: slides[currentSlide].accentColor
+              }}
+            >
+              Inside the Workspace
+            </div>
             <h2 className="text-4xl font-extrabold mb-4 font-heading">
               SaaS Module Showcase
             </h2>
@@ -581,131 +703,219 @@ export default function App() {
             className="carousel-container relative glass-panel p-8 md:p-12 overflow-hidden border border-[var(--border)]"
             onMouseEnter={() => setIsAutoplay(false)}
             onMouseLeave={() => setIsAutoplay(true)}
+            style={{
+              boxShadow: `0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px ${slides[currentSlide].accentColor}06`,
+              borderColor: `${slides[currentSlide].accentColor}20`
+            }}
           >
             {/* Background elements inside carousel for premium aesthetic */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--accent)]/5 rounded-full filter blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--accent-secondary)]/5 rounded-full filter blur-3xl pointer-events-none" />
+            <div 
+              className="absolute top-0 right-0 w-96 h-96 rounded-full filter blur-3xl pointer-events-none transition-all duration-500" 
+              style={{ background: `${slides[currentSlide].accentColor}08` }} 
+            />
+            <div 
+              className="absolute bottom-0 left-0 w-96 h-96 rounded-full filter blur-3xl pointer-events-none transition-all duration-500" 
+              style={{ background: 'var(--accent-secondary)/5' }} 
+            />
 
-            <div className="grid lg:grid-cols-12 gap-12 items-center relative z-10">
-              {/* Left Column: Info Card */}
-              <div className="lg:col-span-5 flex flex-col gap-6 text-left animate-fadeIn">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 flex items-center justify-center animate-pulse">
-                    {slides[currentSlide].icon}
+
+
+            {/* Horizontal Tabs Selection Bar (Full-Width, Responsive Grid) */}
+            <div className="carousel-tabs-container relative z-20">
+              {slides.map((slide, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleGoToSlide(idx)}
+                  className={`carousel-tab-btn ${currentSlide === idx ? 'active' : ''}`}
+                  style={{
+                    '--slide-accent': slide.accentColor,
+                    '--slide-accent-bg': slide.accentBg,
+                    '--slide-glow': slide.glowColor
+                  } as React.CSSProperties}
+                >
+                  <span 
+                    className="carousel-tab-icon shrink-0 transition-transform duration-300"
+                    style={{ color: currentSlide === idx ? slide.accentColor : 'var(--muted)' }}
+                  >
+                    {slide.icon}
+                  </span>
+                  <span className="text-[10px] font-mono tracking-wider uppercase font-bold">{slide.badge}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="flex flex-col items-center gap-8 relative z-10 w-full">
+              {/* Top/Middle: Current Slide Info Card (Centered Header) */}
+              <div key={currentSlide} className="max-w-3xl w-full flex flex-col items-center gap-4 text-center carousel-fade-in bg-slate-900/20 border border-white/5 p-6 md:p-8 rounded-xl shadow-xl justify-between">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: slides[currentSlide].accentColor, boxShadow: `0 0 6px ${slides[currentSlide].accentColor}` }} />
+                    <span 
+                      className="text-xs font-mono uppercase tracking-wider font-bold"
+                      style={{ color: slides[currentSlide].accentColor }}
+                    >
+                      {slides[currentSlide].subtitle}
+                    </span>
                   </div>
-                  <div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[var(--accent)]">{slides[currentSlide].subtitle}</span>
-                    <h3 className="text-2xl md:text-3xl font-extrabold text-white font-heading mt-0.5">
-                      {slides[currentSlide].title}
-                    </h3>
-                  </div>
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-white font-heading leading-tight">
+                    {slides[currentSlide].title}
+                  </h3>
+                  <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed max-w-2xl">
+                    {slides[currentSlide].description}
+                  </p>
                 </div>
 
-                <p className="text-sm text-[var(--muted)] leading-relaxed min-h-[80px]">
-                  {slides[currentSlide].description}
-                </p>
-
-                {/* Key Features List */}
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--muted)] block mb-3">Key Capabilities:</span>
-                  <div className="grid grid-cols-1 gap-2.5">
+                {/* Key Capabilities List (Centered Horizontal Flex Row) */}
+                <div className="border-t border-white/5 pt-4 w-full">
+                  <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
                     {slides[currentSlide].features.map((feat, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5 text-sm text-[var(--muted)]">
-                        <Check className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                      <div key={idx} className="flex items-center gap-2 text-xs md:text-sm text-[var(--muted)] hover:text-white transition-colors duration-300">
+                        <Check 
+                          className="w-4 h-4 shrink-0" 
+                          style={{ color: slides[currentSlide].accentColor }}
+                        />
                         <span>{feat}</span>
                       </div>
                     ))}
                   </div>
                 </div>
-
-                {/* Action CTA */}
-                <div className="flex items-center gap-4 mt-2">
-                  <a href="#deploy" className="btn btn-primary text-sm px-6 py-2.5">
-                    <span>Configure This Module</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                  <button 
-                    onClick={() => setPreviewImage(slides[currentSlide].image)}
-                    className="text-xs text-[var(--accent)] hover:text-white font-mono uppercase tracking-wider transition-colors py-2 px-3 border border-[var(--accent)]/25 rounded hover:border-white/20 bg-white/2"
-                  >
-                    🔍 Zoom Screenshot
-                  </button>
-                </div>
               </div>
 
-              {/* Right Column: Screenshot Mockup */}
-              <div className="lg:col-span-7 flex flex-col gap-3">
+              {/* Bottom: Screenshot Mockup Viewport (Centered, Huge & Full Size) */}
+              <div className="w-full max-w-5xl flex flex-col justify-center">
                 <div 
-                  className="carousel-mockup-frame group"
-                  onClick={() => setPreviewImage(slides[currentSlide].image)}
-                  title="Click to enlarge"
+                  className="carousel-mockup-wrapper group/wrapper"
+                  style={{ 
+                    '--slide-accent': slides[currentSlide].accentColor, 
+                    '--slide-glow': slides[currentSlide].glowColor 
+                  } as React.CSSProperties}
                 >
-                  {/* Browser Window Bar */}
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 bg-slate-900/60">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                      <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                      <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                    </div>
-                    <div className="w-1/2 max-w-[280px] bg-slate-950/60 rounded px-3 py-0.5 text-[9px] font-mono text-[var(--muted)] text-center truncate border border-white/5">
-                      deskii.company.io/workspace/{slides[currentSlide].title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
-                    </div>
-                    <div className="w-6" /> {/* Spacer */}
-                  </div>
-                  
-                  {/* Image viewport */}
-                  <div className="relative overflow-hidden aspect-[16/9]">
-                    <img 
-                      src={slides[currentSlide].image} 
-                      alt={slides[currentSlide].title} 
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                  <div 
+                    className="carousel-mockup-frame group relative"
+                    onClick={() => setPreviewImage(slides[currentSlide].image)}
+                    title="Click to zoom preview"
+                    style={{
+                      borderColor: `${slides[currentSlide].accentColor}33`
+                    }}
+                  >
+                    {/* Dynamic border glow wrapper */}
+                    <div 
+                      className="carousel-mockup-glow"
+                      style={{
+                        background: `radial-gradient(circle, ${slides[currentSlide].accentColor}33 0%, transparent 70%)`
+                      }}
                     />
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-slate-950/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="bg-slate-900/90 border border-white/10 rounded-full px-4 py-2 text-xs font-mono text-white flex items-center gap-2 shadow-2xl backdrop-blur-sm">
-                        <span>Click to view full size</span>
+
+                    {/* Browser Window Bar */}
+                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 bg-slate-900/60 relative z-10">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-rose-500/80" />
+                        <span className="w-2 h-2 rounded-full bg-amber-500/80" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
+                      </div>
+                      <div className="w-1/2 max-w-[280px] bg-slate-950/60 rounded px-3 py-0.5 text-[9px] font-mono text-[var(--muted)] text-center truncate border border-white/5">
+                        deskii.company.io/workspace/{slides[currentSlide].pathName}
+                      </div>
+                      <div className="w-6" /> {/* Spacer */}
+                    </div>
+
+                    {/* Autoplay Progress Bar */}
+                    <div className="carousel-progress-container relative z-10">
+                      <div 
+                        className="carousel-progress-bar"
+                        style={{
+                          width: `${progress}%`,
+                          background: slides[currentSlide].accentColor,
+                          boxShadow: `0 0 8px ${slides[currentSlide].accentColor}`
+                        }}
+                      />
+                    </div>
+                    
+                    {/* Image viewport */}
+                    <div key={currentSlide} className="relative overflow-hidden aspect-[16/9] z-10 carousel-fade-in">
+                      <img 
+                        src={slides[currentSlide].image} 
+                        alt={slides[currentSlide].title} 
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.025]"
+                      />
+                      
+                      {/* Floating stats badge */}
+                      <div className="carousel-stats-badge">
+                        <span className="text-[8px] font-mono uppercase tracking-widest text-[var(--muted)] leading-none flex items-center">
+                          <span 
+                            className="carousel-stats-badge-pulse"
+                            style={{ 
+                              background: slides[currentSlide].accentColor,
+                              boxShadow: `0 0 6px ${slides[currentSlide].accentColor}`
+                            }}
+                          />
+                          {slides[currentSlide].stats.label}
+                        </span>
+                        <span className="text-[11px] font-mono font-bold text-white leading-none mt-0.5">
+                          {slides[currentSlide].stats.value}
+                        </span>
+                      </div>
+
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-slate-950/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="bg-slate-900/90 border border-white/10 rounded-full px-4 py-2 text-xs font-mono text-white flex items-center gap-2 shadow-2xl backdrop-blur-sm">
+                          <span>Click to view full size</span>
+                        </div>
                       </div>
                     </div>
+
+                    {/* Left Navigation Overlay Arrow */}
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); handlePrevSlide(); }}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/85 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/70 hover:text-white transition-all shadow-xl z-20 backdrop-blur-md opacity-0 group-hover:opacity-100 focus:opacity-100"
+                      aria-label="Previous Module"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Right Navigation Overlay Arrow */}
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); handleNextSlide(); }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950/85 border border-white/10 hover:border-white/30 flex items-center justify-center text-white/70 hover:text-white transition-all shadow-xl z-20 backdrop-blur-md opacity-0 group-hover:opacity-100 focus:opacity-100"
+                      aria-label="Next Module"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
+
+                {/* Sub-Mockup Navigation Controls */}
+                <div className="flex items-center justify-between mt-4 px-6 z-20">
+                  {/* Module Page Indicator */}
+                  <span className="text-[10px] font-mono text-[var(--muted)] w-20 text-left">
+                    MODULE <span className="text-white font-bold">{currentSlide + 1}</span> / {slides.length}
+                  </span>
+                  
+                  {/* Dot Pagination */}
+                  <div className="flex items-center gap-1.5">
+                    {slides.map((slide, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleGoToSlide(idx)}
+                        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                        style={{
+                          backgroundColor: currentSlide === idx ? slide.accentColor : 'rgba(255, 255, 255, 0.2)',
+                          transform: currentSlide === idx ? 'scale(1.2)' : 'scale(1)',
+                          boxShadow: currentSlide === idx ? `0 0 6px ${slide.accentColor}` : 'none'
+                        }}
+                        aria-label={`Go to module ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Spacer to balance center dots */}
+                  <div className="w-20 hidden sm:block" />
+                </div>
               </div>
-            </div>
-
-            {/* Pagination & Navigation controls bar */}
-            <div className="flex items-center justify-center gap-6 mt-8 relative z-20">
-              {/* Prev Button */}
-              <button 
-                onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-                className="w-10 h-10 rounded-full bg-slate-900/60 border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-white hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all shadow-md"
-                aria-label="Previous slide"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              {/* Dots */}
-              <div className="flex gap-2">
-                {slides.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'bg-[var(--accent)] w-6 shadow-[0_0_10px_var(--accent)]' : 'bg-white/20 hover:bg-white/45'}`}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* Next Button */}
-              <button 
-                onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-                className="w-10 h-10 rounded-full bg-slate-900/60 border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-white hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all shadow-md"
-                aria-label="Next slide"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
